@@ -17,6 +17,6 @@ public class DaoSession extends AbstractDaoSession {
         historyDataDaoConfig =daoConfigMap.get(HistoryDataDao.class).clone();
         historyDataDaoConfig.initIdentityScope(type);
         histroyDataDao =new HistoryDataDao(historyDataDaoConfig,this);
-
+        new HistoryDataDao(historyDataDaoConfig,this);
     }
 }
