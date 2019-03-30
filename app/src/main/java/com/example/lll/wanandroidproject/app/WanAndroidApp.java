@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.app.Application;
 import android.support.v7.app.AppCompatDelegate;
 
+import com.example.lll.wanandroidproject.di.component.AppComponent;
+import com.example.lll.wanandroidproject.di.component.DaggerAppComponent;
+import com.example.lll.wanandroidproject.di.module.AppModule;
+import com.example.lll.wanandroidproject.di.module.HttpModule;
 import com.squareup.leakcanary.RefWatcher;
 
 import javax.inject.Inject;
@@ -20,7 +24,7 @@ public class WanAndroidApp extends Application implements HasActivityInjector {
     private static WanAndroidApp instance;
     private RefWatcher refWatcher;
     public static boolean isFirstRun = true;
-    private static volatile AppComponent appcomponent;
+    private static volatile AppComponent appComponent;
 
     static {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -29,6 +33,12 @@ public class WanAndroidApp extends Application implements HasActivityInjector {
     public void onCreate() {
         super.onCreate();
         instance =this;
+
+        appComponent = DaggerAppComponent.builder()
+                .appModule(new AppModule(instance))
+                .httpModule(new HttpModule())
+                .build();
+
     }
 
     public static synchronized WanAndroidApp getInstance(){

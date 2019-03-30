@@ -1,4 +1,4 @@
 package com.example.lll.wanandroidproject.core;
 
-public class dd {
+public class DataManager {
 }
