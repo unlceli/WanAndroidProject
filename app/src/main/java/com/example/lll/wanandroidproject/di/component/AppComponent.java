@@ -17,14 +17,14 @@ public interface AppComponent {
      *
      * @param wanAndroidApp
      */
-    void inject(WanAndroidApp wanAndroidApp);
+    //void inject(WanAndroidApp wanAndroidApp);
 
     /**
      * 提供 app的Context
      *
      * @return
      */
-    WanAndroidApp getContext();
+  //  WanAndroidApp getContext();
 
 
 
