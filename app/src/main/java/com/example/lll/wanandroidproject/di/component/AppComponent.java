@@ -7,9 +7,14 @@ import com.example.lll.wanandroidproject.di.module.HttpModule;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import dagger.android.AndroidInjectionModule;
+import dagger.android.support.AndroidSupportInjectionModule;
 
 @Singleton
-@Component(modules = {AppModule.class, HttpModule.class})
+@Component(modules = {
+        AndroidInjectionModule.class,
+        AndroidSupportInjectionModule.class,
+        AppModule.class, HttpModule.class})
 public interface AppComponent {
 
     /**
@@ -17,7 +22,7 @@ public interface AppComponent {
      *
      * @param wanAndroidApp
      */
-    //void inject(WanAndroidApp wanAndroidApp);
+    void inject(WanAndroidApp wanAndroidApp);
 
     /**
      * 提供 app的Context

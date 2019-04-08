@@ -4,7 +4,7 @@ import android.graphics.Color;
 
 public class Constants {
 
-    static final String  BUGLY_ID = "a29fb52485";
+    static final String  BUGLY_ID = "7a95c21064";
     static final String DB_NAME = "aws_wan_android.db";
 
     /**
