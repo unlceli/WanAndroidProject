@@ -23,12 +23,15 @@ public class BasePresenter<T extends AbstractView> implements AbstractPresenter<
 
     @Override
     public void detachView() {
-
+        this.mView = null;
+        if (compositeDisposable != null) {
+            compositeDisposable.clear();
+        }
     }
 
     @Override
     public void addRxBindingSubscribe(Disposable disposable) {
-
+        addSubScribe(disposable);
     }
 
     @Override
@@ -64,5 +67,12 @@ public class BasePresenter<T extends AbstractView> implements AbstractPresenter<
     @Override
     public int getCurrentPage() {
         return 0;
+    }
+
+    protected void addSubScribe(Disposable disposable) {
+        if (compositeDisposable == null) {
+            compositeDisposable = new CompositeDisposable();
+        }
+        compositeDisposable.add(disposable);
     }
 }
