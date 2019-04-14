@@ -21,7 +21,9 @@ public abstract class AbstractSimpleActvitiy extends SupportActivity {
         unbinder = ButterKnife.bind(this);
         mActvitiy = this;
         ActivityCollector.getInstance().addActivity(this);
-
+        onViewCreated();
+        initToolbar();
+        initEventAndData();
     }
 
     @Override

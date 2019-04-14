@@ -1,20 +1,21 @@
-package com.example.lll.wanandroidproject.core;
+package com.example.lll.wanandroidproject.core.prfs;
 
-import com.example.lll.wanandroidproject.core.db.DbHelper;
-import com.example.lll.wanandroidproject.core.http.HttpHelper;
-import com.example.lll.wanandroidproject.core.prfs.PreferenceHelper;
+import android.content.SharedPreferences;
 
-public class DataManager implements HttpHelper, DbHelper, PreferenceHelper{
+import com.example.lll.wanandroidproject.app.Constants;
+import com.example.lll.wanandroidproject.app.WanAndroidApp;
 
-    private HttpHelper mHttpHelper;
-    private DbHelper mDbHelper;
-    private PreferenceHelper mPreferenceHelper;
+import javax.inject.Inject;
 
-    public DataManager(HttpHelper httpHelper, DbHelper dbHelper, PreferenceHelper preferencesHelper) {
-        mHttpHelper = httpHelper;
-        mDbHelper = dbHelper;
-        mPreferenceHelper = preferencesHelper;
+public class PreferenceHelperImpl implements PreferenceHelper {
+
+    private final SharedPreferences mPreferences;
+
+    @Inject
+    PreferenceHelperImpl() {
+        mPreferences = WanAndroidApp.getInstance().getSharedPreferences(Constants.MY_SHARED_PREFERENCE, Constants.MODE_PRIVATE);
     }
+
 
     @Override
     public void setLoginAccount(String account) {

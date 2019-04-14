@@ -47,39 +47,37 @@ public class WanAndroidApp extends Application implements HasActivityInjector {
 
     @Inject
     DispatchingAndroidInjector<Activity> mAndroidInjector;
+
     private static WanAndroidApp instance;
     private RefWatcher refWatcher;
     public static boolean isFirstRun = true;
     private static volatile AppComponent appComponent;
     private DaoSession mDaoSession;
 
-    //static 代码可以防止内存泄漏，全局设置刷新头部以及尾部，优先级最低。
+    //static 代码段可以防止内存泄露, 全局设置刷新头部及尾部，优先级最低
     static {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        SmartRefreshLayout.setDefaultRefreshHeaderCreator(((context, layout) -> {
+        AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_NO);
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator((context, layout) -> {
             //全局设置主题颜色
             layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
-            //指定为Delivery Header ,默认是贝塞尔雷达Header。
+            //指定为Delivery Header，默认是贝塞尔雷达Header
             return new DeliveryHeader(context);
-        }));
-        SmartRefreshLayout.setDefaultRefreshFooterCreator(((context, layout) -> {
+        });
+        SmartRefreshLayout.setDefaultRefreshFooterCreator((context, layout) -> {
             //默认是 BallPulseFooter
             return new BallPulseFooter(context).setAnimatingColor(ContextCompat.getColor(context, R.color.colorPrimary));
-        }));
-
+        });
     }
 
-    public DaoSession getmDaoSession() {
-        return mDaoSession;
-    }
 
     public static synchronized WanAndroidApp getInstance() {
         return instance;
     }
 
     public static RefWatcher getRefWatcher(Context context) {
-        WanAndroidApp androidApp = (WanAndroidApp) context.getApplicationContext();
-        return androidApp.refWatcher;
+        WanAndroidApp application = (WanAndroidApp) context.getApplicationContext();
+        return application.refWatcher;
     }
 
     @Override
@@ -94,9 +92,11 @@ public class WanAndroidApp extends Application implements HasActivityInjector {
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;
         }
+
         refWatcher = LeakCanary.install(this);
 
         initGreenDao();
+
         instance = this;
 
         appComponent = DaggerAppComponent.builder()
@@ -106,21 +106,18 @@ public class WanAndroidApp extends Application implements HasActivityInjector {
 
         appComponent.inject(this);
 
+        //   initAppUpdate();
 
         initBugly();
 
         initLogger();
+
         if (BuildConfig.DEBUG) {
             Stetho.initializeWithDefaults(this);
         }
 
     }
 
-    /**
-     * 指导应用程序咋不同的情况下进行自身的内存释放，以避免被系统直接杀掉。提供应用程序的用户体验。
-     *
-     * @param level
-     */
     @Override
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
@@ -130,41 +127,10 @@ public class WanAndroidApp extends Application implements HasActivityInjector {
         Glide.get(this).trimMemory(level);
     }
 
-    /**
-     * 低版本 内存释放
-     */
     @Override
     public void onLowMemory() {
         super.onLowMemory();
         Glide.get(this).clearMemory();
-    }
-
-    private void initGreenDao() {
-        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(this, Constants.DB_NAME);
-        SQLiteDatabase database = devOpenHelper.getWritableDatabase();
-        DaoMaster daoMaster = new DaoMaster(database);
-        mDaoSession = daoMaster.newSession();
-
-    }
-
-    private void initLogger() {
-        //DEBUG 版本 控制台log
-        if (BuildConfig.DEBUG) {
-            Logger.addLogAdapter(new AndroidLogAdapter(PrettyFormatStrategy.newBuilder().tag(getString(R.string.app_name)).build()));
-        }
-        //把log存在本地
-        Logger.addLogAdapter(new DiskLogAdapter(TxtFormatStrategy.newBuilder().tag(getString(R.string.app_name)).build(getPackageName(), getString(R.string.app_name))));
-    }
-
-    private void initBugly() {
-        // 获取当前包名
-        String packageName = getApplicationContext().getPackageName();
-        // 获取当前进程名
-        String processName = CommonUtils.getProcessName(android.os.Process.myPid());
-        // 设置是否为上报进程
-        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(getApplicationContext());
-        strategy.setUploadProcess(processName == null || processName.equals(packageName));
-        CrashReport.initCrashReport(getApplicationContext(), Constants.BUGLY_ID, false, strategy);
     }
 
     private void initAppUpdate() {
@@ -181,13 +147,56 @@ public class WanAndroidApp extends Application implements HasActivityInjector {
                         CommonUtils.showMessage(getInstance(), error.toString());
                     }
                 })
+
                 .setIUpdateHttpService(new UpdateHttpService())
                 .init(this);
+    }
+
+    private void initGreenDao() {
+        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(this, Constants.DB_NAME);
+        SQLiteDatabase database = devOpenHelper.getWritableDatabase();
+        DaoMaster daoMaster = new DaoMaster(database);
+        mDaoSession = daoMaster.newSession();
+    }
+
+    public DaoSession getDaoSession() {
+        return mDaoSession;
+    }
+
+    private void initLogger() {
+        //DEBUG版本才打控制台log
+        if (BuildConfig.DEBUG) {
+            Logger.addLogAdapter(new AndroidLogAdapter(PrettyFormatStrategy.newBuilder().
+                    tag(getString(R.string.app_name)).build()));
+        }
+        //把log存到本地
+        Logger.addLogAdapter(new DiskLogAdapter(TxtFormatStrategy.newBuilder().
+                tag(getString(R.string.app_name)).build(getPackageName(), getString(R.string.app_name))));
+    }
+
+    private void initBugly() {
+        // 获取当前包名
+        String packageName = getApplicationContext().getPackageName();
+        // 获取当前进程名
+        String processName = CommonUtils.getProcessName(android.os.Process.myPid());
+        // 设置是否为上报进程
+        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(getApplicationContext());
+        strategy.setUploadProcess(processName == null || processName.equals(packageName));
+        CrashReport.initCrashReport(getApplicationContext(), Constants.BUGLY_ID, false, strategy);
+    }
+
+    public static synchronized AppComponent getAppComponent() {
+        if (appComponent == null) {
+            appComponent = DaggerAppComponent.builder()
+                    .appModule(new AppModule(instance))
+                    .httpModule(new HttpModule())
+                    .build();
+        }
+        return appComponent;
     }
 
     @Override
     public AndroidInjector<Activity> activityInjector() {
         return mAndroidInjector;
     }
-
 }
