@@ -2,9 +2,11 @@ package com.example.lll.wanandroidproject.ui.main;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.lll.wanandroidproject.R;
+import com.example.lll.wanandroidproject.app.WanAndroidApp;
 import com.example.lll.wanandroidproject.base.activity.BaseActivity;
 import com.example.lll.wanandroidproject.contract.main.SplashContract;
 import com.example.lll.wanandroidproject.presenter.main.SplashPresenter;
+import com.example.lll.wanandroidproject.utils.StatusBarUtil;
 
 import butterknife.BindView;
 
@@ -38,7 +40,12 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
 
     @Override
     protected void initToolbar() {
-
+        if (!WanAndroidApp.isFirstRun) {
+            jumpToMain();
+            return;
+        }
+        WanAndroidApp.isFirstRun = false;
+        StatusBarUtil.immersive(this);
     }
 
     @Override
