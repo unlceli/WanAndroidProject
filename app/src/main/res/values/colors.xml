@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
-
+    //relative to night
+    <color name="colorPrimary">#00abff</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorBackground">#EEEEEE</color>
+    <color name="colorCard">#FFFFFF</color>
+    <color name="colorText">#2C2C2C</color>
+    <color name="colorLogo">#FED530</color>
 
     <color name="fab_bg">#FF4081</color>
     <color name="drawer_item_bg_p">#e8e8e8</color>
@@ -77,4 +81,5 @@
     <color name="indicator_color">#115E56</color>
     <color name="navigation_selected">#FF36BC9B</color>
     <color name="navigation_normal">#FF757575</color>
+
 </resources>
