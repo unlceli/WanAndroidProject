@@ -1,6 +1,9 @@
 package com.example.lll.wanandroidproject.ui.main;
 
+import android.content.Intent;
+
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.lll.wanandroidproject.MainActivity;
 import com.example.lll.wanandroidproject.R;
 import com.example.lll.wanandroidproject.app.WanAndroidApp;
 import com.example.lll.wanandroidproject.base.activity.BaseActivity;
@@ -50,11 +53,49 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
 
     @Override
     protected void initEventAndData() {
-
+        startAnimation(mOneAnimation, "W.json");
+        startAnimation(mTwoAnimation, "A.json");
+        startAnimation(mThreeAnimation, "N.json");
+        startAnimation(mFourAnimation, "A.json");
+        startAnimation(mFiveAnimation, "N.json");
+        startAnimation(mSixAnimation, "D.json");
+        startAnimation(mSevenAnimation, "R.json");
+        startAnimation(mEightAnimation, "I.json");
+        startAnimation(mNineAnimation, "O.json");
+        startAnimation(mTenAnimation, "D.json");
     }
 
     @Override
     public void jumpToMain() {
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
 
+
+    private void cancelAnimation() {
+        cancelAnimation(mOneAnimation);
+        cancelAnimation(mTwoAnimation);
+        cancelAnimation(mThreeAnimation);
+        cancelAnimation(mFourAnimation);
+        cancelAnimation(mFiveAnimation);
+        cancelAnimation(mSixAnimation);
+        cancelAnimation(mSevenAnimation);
+        cancelAnimation(mEightAnimation);
+
+        cancelAnimation(mNineAnimation);
+        cancelAnimation(mTenAnimation);
+    }
+
+
+    private void startAnimation(LottieAnimationView mLottieAnimationView, String animationName) {
+        mLottieAnimationView.setAnimation(animationName);
+        mLottieAnimationView.playAnimation();
+    }
+
+    private void cancelAnimation(LottieAnimationView mLottieAnimationView) {
+        if (mLottieAnimationView != null) {
+            mLottieAnimationView.cancelAnimation();
+        }
     }
 }
