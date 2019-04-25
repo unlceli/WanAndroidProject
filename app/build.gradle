@@ -7,7 +7,7 @@ android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
     defaultConfig {
-        applicationId "com.example.lll.wanandroidproject"
+        applicationId "com.li.wyx.physical"
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
         versionCode rootProject.ext.android["versionCode"]
@@ -51,7 +51,7 @@ android {
         javaMaxHeapSize "4g"
     }
 }
-greendao{
+greendao {
     schemaVersion 1
     targetGenDir 'src/main/java'
     daoPackage 'json.chao.com.wanandroid.core.dao'
@@ -60,13 +60,12 @@ greendao{
 
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     //base
     implementation rootProject.ext.dependencies["appcompat-v7"]
     implementation rootProject.ext.dependencies["cardview-v7"]
     implementation rootProject.ext.dependencies["design"]
     implementation rootProject.ext.dependencies["constraint-layout"]
-
     //ui
     implementation rootProject.ext.dependencies["SmartRefreshLayout"]
     implementation rootProject.ext.dependencies["SmartRefreshHeader"]
@@ -75,7 +74,6 @@ dependencies {
     implementation rootProject.ext.dependencies["VerticalTabLayout"]
     implementation rootProject.ext.dependencies["flowlayout-lib"]
     implementation rootProject.ext.dependencies["agentweb"]
-
     //net
     implementation rootProject.ext.dependencies["gson"]
     implementation rootProject.ext.dependencies["okhttp"]
@@ -86,16 +84,13 @@ dependencies {
     implementation rootProject.ext.dependencies["glide"]
     annotationProcessor rootProject.ext.dependencies["glide_compiler"]
     implementation rootProject.ext.dependencies["retrofit-url-manager"]
-
     //dao
     implementation rootProject.ext.dependencies["greendao"]
-
     //rx
     implementation rootProject.ext.dependencies["rxjava"]
     implementation rootProject.ext.dependencies["rxandroid"]
     implementation rootProject.ext.dependencies["rxbinding"]
     implementation rootProject.ext.dependencies["rxpermissions"]
-
     //di
     implementation rootProject.ext.dependencies["dagger"]
     annotationProcessor rootProject.ext.dependencies["dagger-compiler"]
@@ -105,10 +100,8 @@ dependencies {
     implementation rootProject.ext.dependencies["javax_annotation"]
     implementation rootProject.ext.dependencies["butterknife"]
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
-
     //multidex
     implementation rootProject.ext.dependencies["multidex"]
-
     //canary
     debugImplementation(rootProject.ext.dependencies["leakcanary-android"]) {
         exclude group: 'com.android.support'
@@ -120,7 +113,6 @@ dependencies {
     testImplementation(rootProject.ext.dependencies["leakcanary-android-no-op"]) {
         exclude group: 'com.android.support'
     }
-
     //other
     implementation rootProject.ext.dependencies["lottie"]
     implementation rootProject.ext.dependencies["BaseRecyclerViewAdapterHelper"]
@@ -133,7 +125,6 @@ dependencies {
     implementation rootProject.ext.dependencies["stetho-okhttp3"]
     implementation rootProject.ext.dependencies["PersistentCookieJar"]
     implementation rootProject.ext.dependencies["XUpdate"]
-
     //UI测试
     androidTestImplementation(rootProject.ext.dependencies["espresso-core"]) {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -146,22 +137,22 @@ dependencies {
     androidTestImplementation rootProject.ext.dependencies["espresso-accessibility"]
     androidTestImplementation rootProject.ext.dependencies["espresso-web"]
     androidTestImplementation rootProject.ext.dependencies["idling-concurrent"]
-
     //unit test
     testImplementation rootProject.ext.dependencies["junit"]
     testImplementation rootProject.ext.dependencies["mockito"]
     testImplementation rootProject.ext.dependencies["powermock-module-junit4"]
     testImplementation rootProject.ext.dependencies["powermock-module-junit4-rule"]
     testImplementation rootProject.ext.dependencies["powermock-api-mockito2"]
-
     //注意这里是mockito2
     testImplementation rootProject.ext.dependencies["powermock-classloading-xstream"]
     testImplementation rootProject.ext.dependencies["robolectric"]
     testImplementation rootProject.ext.dependencies["shadows-support-v4"]
     testImplementation rootProject.ext.dependencies["shadows-multidex"]
-
     //支持Multidex功能
     androidTestImplementation rootProject.ext.dependencies["runner"]
+    //适配
+    testImplementation rootProject.ext.dependencies["autosize"]
+    implementation project(':db')
 }
 //解决支持库版本不兼容问题
 configurations.all {

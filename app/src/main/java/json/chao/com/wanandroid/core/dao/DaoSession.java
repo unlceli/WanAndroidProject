@@ -8,7 +8,7 @@ import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.identityscope.IdentityScopeType;
 import org.greenrobot.greendao.internal.DaoConfig;
 
-import com.example.lll.wanandroidproject.core.dao.HistoryData;
+import com.lijj.wyx.physical.core.dao.HistoryData;
 
 import json.chao.com.wanandroid.core.dao.HistoryDataDao;
 
