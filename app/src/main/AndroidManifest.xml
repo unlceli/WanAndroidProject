@@ -10,10 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.lijj.wyx.physical.ui.main.SplashActivity">
+        <activity android:name=".HttpTestActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -21,6 +20,12 @@
             android:name="com.lijj.wyx.physical.MainActivity"
             android:exported="false"
             android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".ui.main.LoginActivity"></activity>
+        <activity android:name=".ui.hierarchy.KnowledgeHierarchyDetailActivity"></activity>
+        <activity android:name=".ui.main.SearchListActivity"></activity>
+        <activity android:name=".ui.main.SplashActivity"></activity>
+
         <meta-data
             android:name="design_width_in_dp"
             android:value="360" />

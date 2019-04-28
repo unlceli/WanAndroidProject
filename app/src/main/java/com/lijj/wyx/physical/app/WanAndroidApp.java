@@ -41,6 +41,14 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 import json.chao.com.wanandroid.core.dao.DaoMaster;
 import json.chao.com.wanandroid.core.dao.DaoSession;
+import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
+
+import static com.lijj.wyx.physical.core.http.api.Api.APP_DOUBAN_DOMAIN;
+import static com.lijj.wyx.physical.core.http.api.Api.APP_GANK_DOMAIN;
+import static com.lijj.wyx.physical.core.http.api.Api.APP_GITHUB_DOMAIN;
+import static com.lijj.wyx.physical.core.http.api.Api.DOUBAN_DOMAIN_NAME;
+import static com.lijj.wyx.physical.core.http.api.Api.GANK_DOMAIN_NAME;
+import static com.lijj.wyx.physical.core.http.api.Api.GITHUB_DOMAIN_NAME;
 
 public class WanAndroidApp extends Application implements HasActivityInjector {
 
@@ -89,6 +97,13 @@ public class WanAndroidApp extends Application implements HasActivityInjector {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        RetrofitUrlManager.getInstance().setDebug(true);
+        //将每个 BaseUrl 进行初始化,运行时可以随时改变 DOMAIN_NAME 对应的值,从而达到切换 BaseUrl 的效果
+        RetrofitUrlManager.getInstance().putDomain(GITHUB_DOMAIN_NAME, APP_GITHUB_DOMAIN);
+        RetrofitUrlManager.getInstance().putDomain(GANK_DOMAIN_NAME, APP_GANK_DOMAIN);
+        RetrofitUrlManager.getInstance().putDomain(DOUBAN_DOMAIN_NAME, APP_DOUBAN_DOMAIN);
+
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;
         }
