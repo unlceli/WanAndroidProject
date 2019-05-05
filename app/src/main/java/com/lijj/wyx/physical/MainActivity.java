@@ -4,11 +4,14 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -17,6 +20,7 @@ import com.lijj.wyx.physical.base.activity.BaseActivity;
 import com.lijj.wyx.physical.base.fragment.BaseFragment;
 import com.lijj.wyx.physical.contract.main.MainContract;
 import com.lijj.wyx.physical.presenter.main.MainPresenter;
+import com.lijj.wyx.physical.ui.mainpager.fragment.MainPagerFragment;
 import com.lijj.wyx.physical.utils.StatusBarUtil;
 import com.xuexiang.xupdate.XUpdate;
 
@@ -43,6 +47,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     private ArrayList<BaseFragment> mFragment;
     private TextView mUsTv;
     private int mLastFgIndex;
+
+    private MainPagerFragment mMainPagerFragment;
 
     @Override
     protected int getLayoutId() {
@@ -75,8 +81,49 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         if (savedInstanceState == null) {
             mPresenter.setNightModeState(false);
         }
+
     }
-    private void initPager(boolean isRecreate,int position){
+
+
+    private void initPager(boolean isRecreate, int position) {
+        mMainPagerFragment = new MainPagerFragment().getInstance(isRecreate, null);
+        mFragment.add(mMainPagerFragment);
+        //   initFragments();
+        init();
+        switchFragment(position);
+    }
+
+    /**
+     * 切换fragment
+     *
+     * @param position 要显示的fragment的下标
+     */
+    private void switchFragment(int position) {
+        if (position >= Constants.TYPE_COLLECT) {
+            mFloatingActionButton.setVisibility(View.INVISIBLE);
+            mBottomNavigationView.setVisibility(View.INVISIBLE);
+        } else {
+            mFloatingActionButton.setVisibility(View.VISIBLE);
+            mBottomNavigationView.setVisibility(View.VISIBLE);
+        }
+        if (position >= mFragment.size()) {
+            return;
+        }
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment targetFg = mFragment.get(position);
+        Fragment lastFg = mFragment.get(mLastFgIndex);
+        mLastFgIndex = position;
+        ft.hide(lastFg);
+        if (!targetFg.isAdded()) {
+            getSupportFragmentManager().beginTransaction().remove(targetFg).commitAllowingStateLoss();
+            ft.add(R.id.fragment_group, targetFg);
+        }
+        ft.show(targetFg);
+        ft.commitAllowingStateLoss();
+    }
+
+    private void init() {
+
     }
 
     @Override
