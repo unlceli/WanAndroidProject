@@ -1,4 +1,4 @@
-package com.lijj.wyx.physical.base.fragment;
+package com.lijj.wyx.physical.base.activity;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +8,14 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.lijj.wyx.physical.R;
 import com.lijj.wyx.physical.base.presenter.BasePresenter;
 
-public abstract class BaseRootFragment<T extends BasePresenter> extends BaseFragment<T> {
+
+/**
+ * @author quchao
+ * @date 2018/3/30
+ */
+
+public abstract class BaseRootActivity<T extends BasePresenter> extends BaseActivity<T> {
+
     private static final int NORMAL_STATE = 0;
     private static final int LOADING_STATE = 1;
     public static final int ERROR_STATE = 2;
@@ -17,15 +24,11 @@ public abstract class BaseRootFragment<T extends BasePresenter> extends BaseFrag
     private View mErrorView;
     private View mLoadingView;
     private ViewGroup mNormalView;
-
     private int currentState = NORMAL_STATE;
 
     @Override
     protected void initEventAndData() {
-        if (getView() == null) {
-            return;
-        }
-        mNormalView = getView().findViewById(R.id.normal_view);
+        mNormalView = (ViewGroup) findViewById(R.id.normal_view);
         if (mNormalView == null) {
             throw new IllegalStateException(
                     "The subclass of RootActivity must contain a View named 'mNormalView'.");
@@ -34,11 +37,11 @@ public abstract class BaseRootFragment<T extends BasePresenter> extends BaseFrag
             throw new IllegalStateException(
                     "mNormalView's ParentView should be a ViewGroup.");
         }
-        ViewGroup parent = (ViewGroup) mNormalView.getParent();
-        View.inflate(_mActivity, R.layout.loading_view, parent);
-        View.inflate(_mActivity, R.layout.error_view, parent);
-        mLoadingView = parent.findViewById(R.id.loading_group);
-        mErrorView = parent.findViewById(R.id.error_group);
+        ViewGroup mParent = (ViewGroup) mNormalView.getParent();
+        View.inflate(this, R.layout.loading_view, mParent);
+        View.inflate(this, R.layout.error_view, mParent);
+        mLoadingView = mParent.findViewById(R.id.loading_group);
+        mErrorView = mParent.findViewById(R.id.error_group);
         TextView reloadTv = mErrorView.findViewById(R.id.error_reload_tv);
         reloadTv.setOnClickListener(v -> reload());
         mLoadingAnimation = mLoadingView.findViewById(R.id.loading_animation);
@@ -48,16 +51,16 @@ public abstract class BaseRootFragment<T extends BasePresenter> extends BaseFrag
     }
 
     @Override
-    public void onDestroyView() {
+    protected void onDestroy() {
         if (mLoadingAnimation != null) {
             mLoadingAnimation.cancelAnimation();
         }
-        super.onDestroyView();
+        super.onDestroy();
     }
 
     @Override
     public void showLoading() {
-        if (currentState == LOADING_STATE || mLoadingView == null) {
+        if (currentState == LOADING_STATE) {
             return;
         }
         hideCurrentView();
@@ -91,10 +94,7 @@ public abstract class BaseRootFragment<T extends BasePresenter> extends BaseFrag
     private void hideCurrentView() {
         switch (currentState) {
             case NORMAL_STATE:
-                if (mNormalView == null) {
-                    return;
-                }
-                mNormalView.setVisibility(View.INVISIBLE);
+                mNormalView.setVisibility(View.GONE);
                 break;
             case LOADING_STATE:
                 mLoadingAnimation.cancelAnimation();

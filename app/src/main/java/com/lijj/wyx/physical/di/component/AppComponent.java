@@ -3,6 +3,7 @@ package com.lijj.wyx.physical.di.component;
 import com.lijj.wyx.physical.app.WanAndroidApp;
 import com.lijj.wyx.physical.core.DataManager;
 import com.lijj.wyx.physical.di.module.AbstractAllActivityModule;
+import com.lijj.wyx.physical.di.module.AbstractAllFragmentModule;
 import com.lijj.wyx.physical.di.module.AppModule;
 import com.lijj.wyx.physical.di.module.HttpModule;
 
@@ -17,6 +18,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
         AndroidInjectionModule.class,
         AndroidSupportInjectionModule.class,
         AbstractAllActivityModule.class,
+        AbstractAllFragmentModule.class,
         AppModule.class, HttpModule.class})
 public interface AppComponent {
 

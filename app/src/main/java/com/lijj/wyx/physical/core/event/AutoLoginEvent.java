@@ -2,8 +2,8 @@ package com.lijj.wyx.physical.core.event;
 
 /**
  * @author quchao
- * @date 2018/3/30
+ * @date 2018/3/23
  */
 
-public class SwitchProjectEvent {
+public class AutoLoginEvent {
 }

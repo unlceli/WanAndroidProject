@@ -80,6 +80,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         mFragment = new ArrayList<>();
         if (savedInstanceState == null) {
             mPresenter.setNightModeState(false);
+            initPager(false, Constants.TYPE_MAIN_PAGER);
+        } else {
+            mBottomNavigationView.setSelectedItemId(R.id.tab_main_pager);
+            initPager(true, Constants.TYPE_SETTING);
         }
 
     }
@@ -99,6 +103,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
      * @param position 要显示的fragment的下标
      */
     private void switchFragment(int position) {
+
         if (position >= Constants.TYPE_COLLECT) {
             mFloatingActionButton.setVisibility(View.INVISIBLE);
             mBottomNavigationView.setVisibility(View.INVISIBLE);

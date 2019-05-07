@@ -31,45 +31,45 @@ public class BasePresenter<T extends AbstractView> implements AbstractPresenter<
 
     @Override
     public void addRxBindingSubscribe(Disposable disposable) {
-        addSubScribe(disposable);
+        addSubscribe(disposable);
     }
 
     @Override
     public boolean getNightModeState() {
-        return false;
+        return mDataManager.getNightModeState();
     }
 
     @Override
     public void setLoginStatus(boolean loginStatus) {
-
+        mDataManager.setLoginStatus(loginStatus);
     }
 
     @Override
     public boolean getLoginStatus() {
-        return false;
+        return mDataManager.getLoginStatus();
     }
 
     @Override
     public String getLoginAccount() {
-        return null;
+        return mDataManager.getLoginAccount();
     }
 
     @Override
     public void setLoginAccount(String account) {
-
+        mDataManager.setLoginAccount(account);
     }
 
     @Override
     public void setLoginPassword(String password) {
-
+        mDataManager.setLoginPassword(password);
     }
 
     @Override
     public int getCurrentPage() {
-        return 0;
+        return mDataManager.getCurrentPage();
     }
 
-    protected void addSubScribe(Disposable disposable) {
+    protected void addSubscribe(Disposable disposable) {
         if (compositeDisposable == null) {
             compositeDisposable = new CompositeDisposable();
         }
