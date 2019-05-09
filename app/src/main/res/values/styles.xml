@@ -130,4 +130,6 @@
         <item name="android:background">@color/delete_text</item>
     </style>
 
+
+
 </resources>
