@@ -25,6 +25,7 @@ import com.lijj.wyx.physical.presenter.main.MainPresenter;
 import com.lijj.wyx.physical.ui.main.LoginActivity;
 import com.lijj.wyx.physical.ui.mainpager.fragment.MainPagerFragment;
 import com.lijj.wyx.physical.utils.BottomNavigationViewHelper;
+import com.lijj.wyx.physical.utils.CommonAlertDialog;
 import com.lijj.wyx.physical.utils.StatusBarUtil;
 import com.xuexiang.xupdate.XUpdate;
 
@@ -208,21 +209,31 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void showSwitchProject() {
-
+        if (mBottomNavigationView != null) {
+            mBottomNavigationView.setSelectedItemId(R.id.tab_project);
+        }
     }
 
     @Override
     public void showSwitchNavigation() {
-
+        if (mBottomNavigationView != null) {
+            mBottomNavigationView.setSelectedItemId(R.id.tab_navigation);
+        }
     }
 
     @Override
     public void showAutoLoginView() {
-
+        showLoginView();
     }
 
+    /**
+     * 显示登录成功之后的状态
+     */
     @Override
     public void showLogoutSuccess() {
+        CommonAlertDialog.newInstance().cancelDialog(true);
+        mNavigationView.getMenu().findItem(R.id.nav_item_logout).setVisible(false);
+        startActivity(new Intent(this, LoginActivity.class));
 
     }
 

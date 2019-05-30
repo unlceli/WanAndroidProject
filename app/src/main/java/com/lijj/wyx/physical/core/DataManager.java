@@ -19,7 +19,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 
-public class DataManager implements HttpHelper, DbHelper, PreferenceHelper{
+public class DataManager implements HttpHelper, DbHelper, PreferenceHelper {
 
     private HttpHelper mHttpHelper;
     private DbHelper mDbHelper;
@@ -33,91 +33,92 @@ public class DataManager implements HttpHelper, DbHelper, PreferenceHelper{
 
     @Override
     public void setLoginAccount(String account) {
-
+        mPreferenceHelper.setLoginAccount(account);
     }
 
     @Override
     public void setLoginPassword(String password) {
-
+        mPreferenceHelper.setLoginPassword(password);
     }
 
     @Override
     public String getLoginAccount() {
-        return null;
+        return mPreferenceHelper.getLoginAccount();
     }
 
     @Override
     public String getLoginPassword() {
-        return null;
+        return mPreferenceHelper.getLoginPassword();
     }
 
     @Override
     public void setLoginStatus(boolean isLogin) {
-
+        mPreferenceHelper.setLoginStatus(isLogin);
     }
 
     @Override
     public boolean getLoginStatus() {
-        return false;
+        return mPreferenceHelper.getLoginStatus();
     }
 
     @Override
     public void setCookie(String domain, String cookie) {
-
+        mPreferenceHelper.setCookie(domain,cookie);
     }
 
     @Override
     public String getCookie(String domain) {
-        return null;
+        return mPreferenceHelper.getCookie(domain);
     }
 
     @Override
     public void setCurrentPage(int position) {
-
+        mPreferenceHelper.setCurrentPage(position);
     }
 
     @Override
     public int getCurrentPage() {
-        return 0;
+        return mPreferenceHelper.getCurrentPage();
     }
 
     @Override
     public void setProjectCurrentPage(int position) {
-
+        mPreferenceHelper.setProjectCurrentPage(position);
     }
 
     @Override
     public int getProjectCurrentPage() {
-        return 0;
+        return mPreferenceHelper.getProjectCurrentPage();
     }
 
     @Override
     public boolean getAutoCacheState() {
-        return false;
+        return mPreferenceHelper.getAutoCacheState();
     }
 
     @Override
     public boolean getNoImageState() {
-        return false;
+        return mPreferenceHelper.getNoImageState();
     }
 
     @Override
     public boolean getNightModeState() {
-        return false;
+        return mPreferenceHelper.getNightModeState();
     }
 
     @Override
     public void setNightModeState(boolean b) {
-
+        mPreferenceHelper.setNightModeState(b);
     }
 
     @Override
     public void setNoImageState(boolean b) {
-
+        mPreferenceHelper.setNoImageState(b);
     }
 
     @Override
     public void setAutoCacheState(boolean b) {
+        mPreferenceHelper.setAutoCacheState(b);
 
     }
 

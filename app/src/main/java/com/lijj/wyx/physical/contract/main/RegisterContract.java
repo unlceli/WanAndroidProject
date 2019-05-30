@@ -9,7 +9,7 @@ public interface RegisterContract {
         void showRegisterSuccess();
     }
 
-    interface Presenter extends AbstractPresenter<View> {
+    interface Presenter extends AbstractPresenter<RegisterContract.View> {
         void getRegisterData(String username, String password, String rePassword);
     }
 }

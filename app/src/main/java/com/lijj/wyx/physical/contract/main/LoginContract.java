@@ -11,7 +11,7 @@ public interface LoginContract {
         void showLoginError(String error);
     }
 
-    interface Presenter extends AbstractPresenter<View> {
+    interface Presenter extends AbstractPresenter<LoginContract.View> {
         void getLoginData(String username, String password);
     }
 
